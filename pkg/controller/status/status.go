@@ -231,7 +231,7 @@ func (c *Controller) merge(existing *configv1.ClusterOperator) *configv1.Cluster
 		}
 
 	case len(errorMessage) > 0:
-		klog.V(4).Infof("The operator has some internal errors")
+		klog.V(4).Infof("The operator has some internal errors: %s", errorMessage)
 		setOperatorStatusCondition(&existing.Status.Conditions, configv1.ClusterOperatorStatusCondition{
 			Type:    configv1.OperatorProgressing,
 			Status:  configv1.ConditionFalse,
@@ -239,7 +239,7 @@ func (c *Controller) merge(existing *configv1.ClusterOperator) *configv1.Cluster
 		})
 
 	case len(disabledMessage) > 0:
-		klog.V(4).Infof("The operator is marked as disabled")
+		klog.V(4).Infof("The operator is marked as disabled: %s", disabledMessage)
 		setOperatorStatusCondition(&existing.Status.Conditions, configv1.ClusterOperatorStatusCondition{
 			Type:               configv1.OperatorProgressing,
 			Status:             configv1.ConditionFalse,
